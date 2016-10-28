@@ -8,17 +8,17 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.opensource.org/licenses/eclipse-1.0.php
- * 
+ *
  * @author Keith Palmer <Keith@ConsoliBYTE.com>
- * 
+ *
  * @package QuickBooks
  * @subpackage IPP
  */
 
 /**
- * 
- * 
- * 
+ *
+ *
+ *
  */
 class QuickBooks_IPP_IDS
 {
@@ -161,6 +161,10 @@ class QuickBooks_IPP_IDS
 	const RESOURCE_SHIPMETHOD = 'ShipMethod';
 	
 	const RESOURCE_TIMEACTIVITY = 'TimeActivity';
+
+	const RESOURCE_AR_AgedReceivables = 'AgedReceivables';
+
+	const RESOURCE_AR_AgedReceivableDetail = 'AgedReceivableDetail';
 	
 	/**
 	 * IDS v2 - QuickBooks Desktop
@@ -168,7 +172,7 @@ class QuickBooks_IPP_IDS
 	const RESOURCE_TERM = 'Term';
 	
 	/**
-	 * IDS v2 - QuickBooks Online 
+	 * IDS v2 - QuickBooks Online
 	 */
 	const RESOURCE_SALESTERM = 'Sales-Term';
 	
@@ -180,48 +184,46 @@ class QuickBooks_IPP_IDS
 	const RESOURCE_VENDORCREDIT = 'VendorCredit';
 	
 	/**
-	 * 
-	 * 
-	 * 
+	 *
+	 *
+	 *
 	 */
-	static public function resourceToKeyType($resource)
+	public static function resourceToKeyType($resource)
 	{
 		$txns = array(
-			QuickBooks_IPP_IDS::RESOURCE_BILL, 
+			QuickBooks_IPP_IDS::RESOURCE_BILL,
 			QuickBooks_IPP_IDS::RESOURCE_BILLPAYMENT,
-			QuickBooks_IPP_IDS::RESOURCE_BILLPAYMENTCREDITCARD, 
-			QuickBooks_IPP_IDS::RESOURCE_CHANGEDATADELETED, 
+			QuickBooks_IPP_IDS::RESOURCE_BILLPAYMENTCREDITCARD,
+			QuickBooks_IPP_IDS::RESOURCE_CHANGEDATADELETED,
 			QuickBooks_IPP_IDS::RESOURCE_CHECK,
 			QuickBooks_IPP_IDS::RESOURCE_CREDITMEMO,
-			QuickBooks_IPP_IDS::RESOURCE_ESTIMATE, 
-			QuickBooks_IPP_IDS::RESOURCE_INVOICE, 
+			QuickBooks_IPP_IDS::RESOURCE_ESTIMATE,
+			QuickBooks_IPP_IDS::RESOURCE_INVOICE,
 			QuickBooks_IPP_IDS::RESOURCE_ITEMRECEIPT,
-			QuickBooks_IPP_IDS::RESOURCE_JOURNALENTRY, 
-			QuickBooks_IPP_IDS::RESOURCE_PAYMENT, 
-			QuickBooks_IPP_IDS::RESOURCE_PURCHASEORDER, 
-			QuickBooks_IPP_IDS::RESOURCE_SALESORDER, 
-			QuickBooks_IPP_IDS::RESOURCE_SALESRECEIPT, 
-			QuickBooks_IPP_IDS::RESOURCE_TIMEACTIVITY, 
+			QuickBooks_IPP_IDS::RESOURCE_JOURNALENTRY,
+			QuickBooks_IPP_IDS::RESOURCE_PAYMENT,
+			QuickBooks_IPP_IDS::RESOURCE_PURCHASEORDER,
+			QuickBooks_IPP_IDS::RESOURCE_SALESORDER,
+			QuickBooks_IPP_IDS::RESOURCE_SALESRECEIPT,
+			QuickBooks_IPP_IDS::RESOURCE_TIMEACTIVITY,
 			QuickBooks_IPP_IDS::RESOURCE_VENDORCREDIT,
 			);
 		
-		if (in_array($resource, $txns))
-		{
+		if (in_array($resource, $txns)) {
 			return 'TransactionId';
 		}
 		
 		return 'ListId';
 	}
 	
-	static public function parseIDType($str)
+	public static function parseIDType($str)
 	{
 		$str = trim($str, '{}');
 		
 		// @todo Add validation here so that it always returns the correct types (string/integer)
 		$arr = explode('-', $str);
 		
-		if (count($arr) == 2)
-		{
+		if (count($arr) == 2) {
 			$arr['domain'] = $arr[0];
 			$arr['ID'] = $arr[1];
 			
@@ -231,12 +233,12 @@ class QuickBooks_IPP_IDS
 		return array( 0 => '', 'domain' => '', 1 => $str, 'ID' => $str );
 	}
 	
-	static public function buildIDType($domain, $ID)
+	public static function buildIDType($domain, $ID)
 	{
 		return '{' . $domain . '-' . $ID . '}';
 	}
 
-	static public function usableIDType($str)
+	public static function usableIDType($str)
 	{
 		return trim(str_replace('-', ':', $str), '{}:');
 	}
