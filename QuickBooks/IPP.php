@@ -1049,8 +1049,8 @@ class QuickBooks_IPP
 		$err_desc = null;
 		$err_db = null;
 
-		if ($data = json_decode($data)) {
-			$parsed = $data;
+		if ($jsonData = json_decode($data)) {
+			$parsed = $jsonData;
 		} else {
 			// Try to parse the responses into QuickBooks_IPP_Object_* classes
 			$parsed = $Parser->parseIDS($data, $optype, $this->flavor(), QuickBooks_IPP_IDS::VERSION_3, $xml_errnum, $xml_errmsg, $err_code, $err_desc, $err_db);
